@@ -1,0 +1,1288 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-03-03T04:40:40.898Z",
+  "rowCount": 17,
+  "history": [
+    {
+      "date": "2026-02-15",
+      "savedAt": "2026-03-03T04:29:46.105Z",
+      "subject": "Zod Validation and Docker Compose",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "The server response shape does not match the defined response schema.",
+              "feedback": "Correct: serialization issues occur when outgoing data violates response contract shape.",
+              "isCorrect": true
+            },
+            {
+              "text": "The client sends extra request fields blocked by whitelist settings.",
+              "feedback": "That is request validation failure, not response serialization mismatch.",
+              "isCorrect": false
+            },
+            {
+              "text": "Docker rebuilds an unchanged image without modifying the Dockerfile.",
+              "feedback": "Compose build behavior is unrelated to API serialization or response schemas.",
+              "isCorrect": false
+            },
+            {
+              "text": "A user omits authentication headers on a protected endpoint.",
+              "feedback": "Missing auth is authorization or authentication failure, not serialization.",
+              "isCorrect": false
+            }
+          ],
+          "question": "In the notes, what is described as a serialization error in Zod-based APIs?",
+          "whyOptions": [
+            {
+              "text": "Because the incoming payload violated the input schema expected by the API.",
+              "feedback": "Exactly: client-supplied data failed agreed constraints, so request is invalid.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because the server cannot validate schemas unless Docker image is rebuilt.",
+              "feedback": "Schema validation is runtime logic and does not require image rebuilds.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because response serialization always runs before request parsing in Nest.",
+              "feedback": "Request parsing precedes response serialization; lifecycle order is opposite here.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because Zod only validates string fields and ignores other types.",
+              "feedback": "Zod validates many types, including objects, numbers, unions, and arrays.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is a validation exception treated as user error in this note context?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-16",
+      "savedAt": "2026-03-03T04:29:46.099Z",
+      "subject": "Zod SafeParse Environment Config",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "It returns `{ success: false }` metadata instead of throwing by default.",
+              "feedback": "Correct: safeParse returns a result object and avoids exception-based control flow.",
+              "isCorrect": true
+            },
+            {
+              "text": "It rewrites `.env` file entries to satisfy the schema automatically.",
+              "feedback": "SafeParse validates runtime values; it never edits your `.env` file.",
+              "isCorrect": false
+            },
+            {
+              "text": "It always throws immediately when any key is undefined.",
+              "feedback": "That behavior matches parse, not safeParse's non-throwing result contract.",
+              "isCorrect": false
+            },
+            {
+              "text": "It mutates `process.env` types so all keys become numbers.",
+              "feedback": "Validation returns parsed output; it does not globally mutate env source types.",
+              "isCorrect": false
+            }
+          ],
+          "question": "How does `safeParse` behave when environment values fail schema validation?",
+          "whyOptions": [
+            {
+              "text": "Because env inputs are strings or undefined and need explicit constraints.",
+              "feedback": "Exactly: schema validation prevents hidden misconfiguration from reaching runtime logic.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because Node cannot access environment variables without Zod middleware.",
+              "feedback": "Node reads env variables directly; Zod adds safety, not access.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because coercion only works after routes are registered in Nest.",
+              "feedback": "Coercion works during parsing and is independent from route registration.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because schema checks reduce bundle size by stripping unused variables.",
+              "feedback": "Validation improves correctness, not bundle optimization or dead-code elimination.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why validate `process.env` against a schema at startup?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-17",
+      "savedAt": "2026-03-03T04:29:46.094Z",
+      "subject": "TypeScript Generics and Reduce",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "Because `{}` is inferred too vaguely, so indexed writes need a defined shape.",
+              "feedback": "Correct: empty object inference lacks index/value info, so property updates are unsafe.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because `reduce` never supports generic inference under any circumstances.",
+              "feedback": "Reduce can infer types in many cases, especially with precise initial values.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because callbacks passed to `reduce` must always return `Promise` values.",
+              "feedback": "Reduce callbacks can be synchronous; async return is optional and unrelated here.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because object literals cannot be used as `reduce` initial values in TypeScript.",
+              "feedback": "Object initial values are valid; the issue is missing explicit structural typing.",
+              "isCorrect": false
+            }
+          ],
+          "question": "Why does `reduce` with an initial value of `{}` often need explicit accumulator typing in TypeScript?",
+          "whyOptions": [
+            {
+              "text": "Because the compiler cannot guarantee key existence or value type from bare `{}`.",
+              "feedback": "Exactly: without an index signature, dynamic property access remains type-unsafe.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because TypeScript disables bracket notation unless `any` is globally enabled.",
+              "feedback": "Bracket notation is allowed; safety checks fail when structure is undefined.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because generic `U` only works with primitive accumulator types.",
+              "feedback": "Generic accumulators can be objects; they just need a concrete declared shape.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because `reduce` always narrows accumulator types to `never` during iteration.",
+              "feedback": "TypeScript does not force `never` here; constraints come from initial inference.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why does an untyped `{}` initializer produce friction with dynamic keys like `acc[current]`?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-18",
+      "savedAt": "2026-03-03T04:29:46.088Z",
+      "subject": "Systematic Program Design Fundamentals",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "An expression that evaluates to either true or false.",
+              "feedback": "Correct: predicates produce boolean outcomes used by conditional logic.",
+              "isCorrect": true
+            },
+            {
+              "text": "A function signature listing parameter and return data types.",
+              "feedback": "Signatures describe contracts; they do not themselves evaluate boolean outcomes.",
+              "isCorrect": false
+            },
+            {
+              "text": "A global constant written in uppercase to avoid mutation.",
+              "feedback": "Uppercase naming is convention, but predicate definition concerns evaluation result.",
+              "isCorrect": false
+            },
+            {
+              "text": "An operator like `+` or `&&` used inside expressions.",
+              "feedback": "Operators are symbols; predicates are full expressions yielding boolean values.",
+              "isCorrect": false
+            }
+          ],
+          "question": "In the notes, what is a predicate?",
+          "whyOptions": [
+            {
+              "text": "Because they drive branching decisions and filtering based on explicit conditions.",
+              "feedback": "Exactly: reliable condition checks control execution paths and expected outcomes.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because predicates automatically convert all function outputs to constants.",
+              "feedback": "Predicates evaluate conditions; they do not rewrite output mutability semantics.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because predicates replace the need for tests in HTDF workflow.",
+              "feedback": "Tests remain required; predicates only define decision conditions within logic.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because predicates eliminate boundary cases by ignoring edge inputs.",
+              "feedback": "Boundary cases still exist and must be tested explicitly in design.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why are predicates central when designing function logic?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-19",
+      "savedAt": "2026-03-03T04:29:46.083Z",
+      "subject": "SQL Indexing Strategy",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "When writes dominate and the column is rarely filtered or joined.",
+              "feedback": "Correct: index maintenance adds write overhead without enough query benefit.",
+              "isCorrect": true
+            },
+            {
+              "text": "When queries frequently use selective `WHERE` conditions on that column.",
+              "feedback": "That is a strong indexing case because selective reads gain speed.",
+              "isCorrect": false
+            },
+            {
+              "text": "When the column appears in join predicates across large tables.",
+              "feedback": "Join keys are common index targets to reduce expensive table scans.",
+              "isCorrect": false
+            },
+            {
+              "text": "When reads heavily outnumber writes and latency is query-bound.",
+              "feedback": "Read-heavy selective workloads typically benefit from proper indexing.",
+              "isCorrect": false
+            }
+          ],
+          "question": "When is indexing a column usually a bad tradeoff according to the notes?",
+          "whyOptions": [
+            {
+              "text": "Because inserts and updates must also maintain index structures on each write.",
+              "feedback": "Exactly: every write now updates extra data structures, increasing total cost.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because indexes disable transaction commits until manual vacuum runs.",
+              "feedback": "Transactions commit normally; index cost is maintenance, not commit disabling.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because query planners ignore indexed columns for equality comparisons.",
+              "feedback": "Planners often prefer indexes for selective equality predicates, not ignore them.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because indexes only accelerate sorting and never help filtering operations.",
+              "feedback": "Indexes often speed filtering and joins, not just sort operations.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why can an index hurt write-heavy workloads?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-20",
+      "savedAt": "2026-03-03T04:29:46.077Z",
+      "subject": "SQL Advanced Fundamentals",
+      "questions": [
+        {
+          "id": "q1",
+          "hint": "Execution starts with source rows, not projection.",
+          "options": [
+            {
+              "text": "FROM -> JOIN -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY",
+              "feedback": "Correct: row-set construction and filtering happen before projection and sorting.",
+              "isCorrect": true
+            },
+            {
+              "text": "SELECT -> FROM -> WHERE -> GROUP BY -> HAVING -> ORDER BY",
+              "feedback": "That is written syntax order, but execution starts from source resolution.",
+              "isCorrect": false
+            },
+            {
+              "text": "WHERE -> FROM -> JOIN -> SELECT -> GROUP BY -> HAVING -> ORDER BY",
+              "feedback": "WHERE cannot run first because no joined row set exists yet.",
+              "isCorrect": false
+            },
+            {
+              "text": "FROM -> GROUP BY -> WHERE -> HAVING -> SELECT -> ORDER BY -> JOIN",
+              "feedback": "JOIN must occur before grouping to build the combined working dataset.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the correct logical SQL execution order from the notes?",
+          "whyOptions": [
+            {
+              "text": "Because SQL must build the working row set before choosing output columns.",
+              "feedback": "Exactly: projection requires a resolved dataset containing all referenced fields.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because SELECT only sorts data and cannot reference source tables.",
+              "feedback": "SELECT performs projection, while sorting is handled later by ORDER BY.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because HAVING defines table relationships before joins are planned.",
+              "feedback": "HAVING filters grouped results and does not establish join relationships.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because ORDER BY must execute first to choose the correct joined tables.",
+              "feedback": "ORDER BY is a final presentation step, not table selection logic.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why must SQL process FROM and JOIN before SELECT?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-21",
+      "savedAt": "2026-03-03T04:29:46.071Z",
+      "subject": "RAG and Developer Search Workflow",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "Retrieves external context at query time without retraining the base model.",
+              "feedback": "Correct: RAG injects retrieved knowledge dynamically during answer generation.",
+              "isCorrect": true
+            },
+            {
+              "text": "Retrains the language model on every user query for personalization.",
+              "feedback": "Per-query retraining is impractical; RAG uses retrieval, not model updates.",
+              "isCorrect": false
+            },
+            {
+              "text": "Disables retrieval and relies only on parametric model memory.",
+              "feedback": "That is the opposite of RAG, which explicitly depends on retrieval.",
+              "isCorrect": false
+            },
+            {
+              "text": "Compresses vector indexes into static prompts before deployment.",
+              "feedback": "RAG performs runtime retrieval rather than one-time prompt compression.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What does Retrieval-Augmented Generation (RAG) do according to the notes?",
+          "whyOptions": [
+            {
+              "text": "Because it can inject relevant private or recent data during inference.",
+              "feedback": "Exactly: retrieval supplies fresh context that base training may not include.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because it guarantees factual accuracy without retrieval quality concerns.",
+              "feedback": "Accuracy still depends on retrieval relevance and source reliability.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because it permanently writes fetched documents into model weights.",
+              "feedback": "RAG context is transient and does not alter core model parameters.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because it removes token limits by bypassing context windows entirely.",
+              "feedback": "RAG helps relevance, but generated prompts still respect context limits.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is RAG useful for personalized or current answers?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-22",
+      "savedAt": "2026-03-03T04:29:46.054Z",
+      "subject": "Next.js Rendering and Performance",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "Run them in parallel with `Promise.all` instead of sequential awaits.",
+              "feedback": "Correct: parallel execution removes unnecessary waiting between unrelated requests.",
+              "isCorrect": true
+            },
+            {
+              "text": "Force all requests into one long chain to preserve deterministic ordering.",
+              "feedback": "Ordering is unnecessary for independent calls and increases total response time.",
+              "isCorrect": false
+            },
+            {
+              "text": "Disable Next.js prefetch so requests can complete one by one.",
+              "feedback": "Prefetch behavior is separate and does not solve backend request waterfalls.",
+              "isCorrect": false
+            },
+            {
+              "text": "Move all requests to client `useEffect` so server waits are eliminated.",
+              "feedback": "Client fetching may worsen UX and does not inherently remove sequential dependencies.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the best way to handle independent data requests to avoid waterfall latency?",
+          "whyOptions": [
+            {
+              "text": "Because each request starts only after the previous one completes.",
+              "feedback": "Exactly: sequential dependency accumulates waiting time across every network hop.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because parallel requests are blocked by the JavaScript event loop.",
+              "feedback": "I/O requests can run concurrently; event loop does not serialize network completion.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because SSR requires exactly one fetch per route by framework rule.",
+              "feedback": "SSR supports multiple fetches; architecture decisions determine request strategy.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because Next.js image optimization disables concurrent API communication.",
+              "feedback": "Image optimization is unrelated to parallel API request execution patterns.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why do waterfall requests increase page latency?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-23",
+      "savedAt": "2026-03-03T04:29:46.048Z",
+      "subject": "NestJS Request Lifecycle",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "Guard, because it allows or blocks execution using auth and role logic.",
+              "feedback": "Correct: guards enforce access policy before controller handler execution.",
+              "isCorrect": true
+            },
+            {
+              "text": "Middleware, because it always has access to route metadata and roles.",
+              "feedback": "Middleware runs earlier and is route-agnostic, so metadata access is limited.",
+              "isCorrect": false
+            },
+            {
+              "text": "Interceptor, because it only runs after responses are serialized.",
+              "feedback": "Interceptors wrap execution pre/post handler; they are not primary authorization gates.",
+              "isCorrect": false
+            },
+            {
+              "text": "Pipe, because it transforms and validates request body authorization rules.",
+              "feedback": "Pipes validate or transform data, not decide permissions for route access.",
+              "isCorrect": false
+            }
+          ],
+          "question": "Which NestJS component is responsible for route-level authorization decisions?",
+          "whyOptions": [
+            {
+              "text": "Because guards integrate with execution context and route-specific metadata.",
+              "feedback": "Exactly: guards can read decorators and apply per-handler authorization policies.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because middleware executes after controllers and can inspect return values.",
+              "feedback": "Middleware executes before routing, not after controller return processing.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because interceptors cannot access request objects in NestJS.",
+              "feedback": "Interceptors can access context, but authorization remains a guard concern.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because pipes are disabled when `transform: true` is enabled.",
+              "feedback": "Transform option belongs to validation pipe behavior and does not disable pipes.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why use a guard instead of middleware for role checks?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-24",
+      "savedAt": "2026-03-03T04:29:46.041Z",
+      "subject": "NestJS HTTP Exceptions",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "`ForbiddenException` with HTTP 403.",
+              "feedback": "Correct: user identity is valid, but policy denies requested resource access.",
+              "isCorrect": true
+            },
+            {
+              "text": "`UnauthorizedException` with HTTP 401.",
+              "feedback": "401 means missing or invalid authentication credentials, not denied authorization.",
+              "isCorrect": false
+            },
+            {
+              "text": "`NotFoundException` with HTTP 404.",
+              "feedback": "404 indicates missing resource, not insufficient permission for existing resource.",
+              "isCorrect": false
+            },
+            {
+              "text": "`ConflictException` with HTTP 409.",
+              "feedback": "409 represents state conflicts, such as duplicate records, not access control.",
+              "isCorrect": false
+            }
+          ],
+          "question": "A user is authenticated but lacks permission for the action. Which Nest exception fits?",
+          "whyOptions": [
+            {
+              "text": "403 means authenticated identity exists, but allowed action checks failed.",
+              "feedback": "Exactly: authentication succeeded, yet authorization policy blocks the operation.",
+              "isCorrect": true
+            },
+            {
+              "text": "403 means token is malformed and cannot be decoded by server.",
+              "feedback": "Malformed or missing credentials map to 401 authentication failures instead.",
+              "isCorrect": false
+            },
+            {
+              "text": "403 means requested route does not exist in controller mapping.",
+              "feedback": "Missing routes typically return 404, unrelated to permissions.",
+              "isCorrect": false
+            },
+            {
+              "text": "403 means request body failed semantic validation and needs 422.",
+              "feedback": "Validation semantics are separate from authorization outcomes and status codes.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is 403 distinct from 401 in access-control flows?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-25",
+      "savedAt": "2026-03-03T04:29:46.034Z",
+      "subject": "Multi-Tenant CMS Class Diagram",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "To let tenants add content types without running database migrations.",
+              "feedback": "Correct: schema flexibility moves model evolution into tenant-level configuration.",
+              "isCorrect": true
+            },
+            {
+              "text": "To guarantee strict compile-time typing directly inside PostgreSQL rows.",
+              "feedback": "JSONB is flexible runtime data, not compile-time static typing enforcement.",
+              "isCorrect": false
+            },
+            {
+              "text": "To remove the need for relational links between entries and definitions.",
+              "feedback": "Entries still reference definitions through identifiers to maintain structure mapping.",
+              "isCorrect": false
+            },
+            {
+              "text": "To force every tenant to share one immutable global content model.",
+              "feedback": "The design exists to support tenant-specific models, not one rigid schema.",
+              "isCorrect": false
+            }
+          ],
+          "question": "Why does the CMS note store content definitions as JSON schema/config objects?",
+          "whyOptions": [
+            {
+              "text": "Definitions store field blueprint; entries store item data referencing that blueprint.",
+              "feedback": "Exactly: one defines structure, the other stores actual records and values.",
+              "isCorrect": true
+            },
+            {
+              "text": "Definitions store published posts, while entries only store tenant membership roles.",
+              "feedback": "Membership is separate; entries hold content items tied to definitions.",
+              "isCorrect": false
+            },
+            {
+              "text": "Definitions and entries are duplicates kept for backup and rollback only.",
+              "feedback": "They represent distinct responsibilities, not redundant backup copies.",
+              "isCorrect": false
+            },
+            {
+              "text": "Definitions are static SQL views, while entries are temporary cache rows.",
+              "feedback": "The note describes JSON-backed domain entities, not view-cache architecture.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "How do `content_definitions` and `content_entries` work together in this design?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-26",
+      "savedAt": "2026-03-03T04:29:46.026Z",
+      "subject": "JavaScript and TypeScript Dynamic Access",
+      "questions": [
+        {
+          "id": "q1",
+          "hint": "It is not the modified array object.",
+          "options": [
+            {
+              "text": "The new length of the array after insertion.",
+              "feedback": "Correct: push mutates the array and returns the updated element count.",
+              "isCorrect": true
+            },
+            {
+              "text": "A new array containing only the pushed item.",
+              "feedback": "Push mutates in place; creating a separate array is not its behavior.",
+              "isCorrect": false
+            },
+            {
+              "text": "The array itself, so methods can always be chained.",
+              "feedback": "This confuses push with fluent APIs; push returns a number, not array.",
+              "isCorrect": false
+            },
+            {
+              "text": "The element that was previously at the last index.",
+              "feedback": "Push does not expose prior tail values; it reports resulting array length.",
+              "isCorrect": false
+            }
+          ],
+          "question": "In JavaScript, what does `array.push(item)` return?",
+          "whyOptions": [
+            {
+              "text": "Because the operation's primary immediate result is the updated array size.",
+              "feedback": "Exactly: the method signals post-mutation size, which callers often need immediately.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because JavaScript forbids returning reference types from mutating methods.",
+              "feedback": "JavaScript allows returning references; this is a specific API design choice.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because `push` internally clones arrays and hides the original reference.",
+              "feedback": "Push does not clone by default; it mutates the same array instance.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because returning arrays would break garbage collection in V8.",
+              "feedback": "Garbage collection is unrelated to this return contract and method semantics.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why does `push` return length instead of the array value?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-27",
+      "savedAt": "2026-03-03T04:29:46.020Z",
+      "subject": "JavaScript map vs reduce",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "`map` returns a same-length array, while `reduce` can return any accumulated type.",
+              "feedback": "Correct: map transforms each item, but reduce folds into a chosen result.",
+              "isCorrect": true
+            },
+            {
+              "text": "`map` always mutates the original array, while `reduce` never does.",
+              "feedback": "Map returns a new array; mutation behavior depends on callback side effects.",
+              "isCorrect": false
+            },
+            {
+              "text": "`reduce` must return an array of identical length to the input.",
+              "feedback": "Reduce may return objects, numbers, strings, or arrays of different sizes.",
+              "isCorrect": false
+            },
+            {
+              "text": "`map` is only for numbers, and `reduce` is only for objects.",
+              "feedback": "Both work on any element type; purpose differs by transformation strategy.",
+              "isCorrect": false
+            }
+          ],
+          "question": "Which statement best captures the difference between `map()` and `reduce()`?",
+          "whyOptions": [
+            {
+              "text": "Because `reduce` is driven by accumulator type and callback return contract.",
+              "feedback": "Exactly: accumulator initialization defines the destination shape of the fold.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because `map` forbids callback returns and only reuses existing values.",
+              "feedback": "Map requires callback returns; they fill each slot in a new array.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because `reduce` skips callback execution for non-primitive array entries.",
+              "feedback": "Reduce processes elements normally; entry primitiveness is irrelevant here.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because `map` automatically infers object keys from array indexes.",
+              "feedback": "Map does index-wise transformation, not key projection into arbitrary objects.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why can `reduce` change the output data type while `map` usually does not?"
+        }
+      ]
+    },
+    {
+      "date": "2026-02-28",
+      "savedAt": "2026-03-03T04:29:46.014Z",
+      "subject": "Cypress Testing Architecture",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "Quickly verify critical user journeys before running deeper test coverage.",
+              "feedback": "Correct: smoke tests detect catastrophic breakage early with minimal execution time.",
+              "isCorrect": true
+            },
+            {
+              "text": "Replace all regression tests so full suites become unnecessary.",
+              "feedback": "Smoke tests are minimal checks and cannot replace comprehensive behavior coverage.",
+              "isCorrect": false
+            },
+            {
+              "text": "Benchmark frontend performance metrics with statistically significant confidence.",
+              "feedback": "Performance benchmarking requires dedicated tooling, not basic smoke scenarios.",
+              "isCorrect": false
+            },
+            {
+              "text": "Validate only fixture file schemas and ignore UI interactions entirely.",
+              "feedback": "Smoke tests focus on user-critical flows, not schema-only fixture validation.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the primary purpose of smoke tests in a Cypress suite?",
+          "whyOptions": [
+            {
+              "text": "They fail fast on major outages, saving time and debugging effort.",
+              "feedback": "Exactly: early critical-path failures prevent wasting cycles on deeper suites.",
+              "isCorrect": true
+            },
+            {
+              "text": "They automatically fix flaky tests by rerunning failing commands silently.",
+              "feedback": "Smoke strategy improves sequencing, but does not auto-heal flaky test logic.",
+              "isCorrect": false
+            },
+            {
+              "text": "They guarantee every edge case is covered before release.",
+              "feedback": "Smoke scope is intentionally narrow and cannot guarantee exhaustive coverage.",
+              "isCorrect": false
+            },
+            {
+              "text": "They remove the need for reusable commands and page objects.",
+              "feedback": "Abstractions still reduce duplication and improve maintainability across suites.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why run smoke tests before full end-to-end suites?"
+        }
+      ]
+    },
+    {
+      "date": "2026-03-01",
+      "savedAt": "2026-03-03T04:29:46.003Z",
+      "subject": "CMS Product Flow",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "Directly to the manage websites dashboard showing created site snapshots.",
+              "feedback": "Correct: returning users should resume management from their existing sites dashboard.",
+              "isCorrect": true
+            },
+            {
+              "text": "Back to the marketing home page to read product presentation again.",
+              "feedback": "Post-login flow should prioritize task continuation, not repeated landing content.",
+              "isCorrect": false
+            },
+            {
+              "text": "Immediately into a forced new-site wizard for every login session.",
+              "feedback": "Forcing creation ignores existing assets and adds unnecessary workflow friction.",
+              "isCorrect": false
+            },
+            {
+              "text": "A generic account settings page with no website context.",
+              "feedback": "Settings-first navigation delays core objective of managing current websites.",
+              "isCorrect": false
+            }
+          ],
+          "question": "In the CMS flow, where should a user with existing sites go right after login?",
+          "whyOptions": [
+            {
+              "text": "It reduces friction and moves users immediately to relevant management actions.",
+              "feedback": "Exactly: contextual routing shortens time-to-task and improves product usability.",
+              "isCorrect": true
+            },
+            {
+              "text": "It prevents users from creating any additional sites after first login.",
+              "feedback": "The goal is efficient access, not restricting future site creation.",
+              "isCorrect": false
+            },
+            {
+              "text": "It is required because CMS products cannot render public landing pages.",
+              "feedback": "Landing pages remain useful; routing choice depends on authenticated context.",
+              "isCorrect": false
+            },
+            {
+              "text": "It removes the need for per-site dashboards and blog management screens.",
+              "feedback": "Per-site dashboards remain essential after selecting a specific website.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is direct dashboard routing better for users with existing websites?"
+        }
+      ]
+    },
+    {
+      "date": "2026-03-02",
+      "savedAt": "2026-03-03T04:29:45.980Z",
+      "subject": "Backend Interview Prep",
+      "questions": [
+        {
+          "id": "q1",
+          "options": [
+            {
+              "text": "A versioned script that applies and can roll back schema changes.",
+              "feedback": "Correct: migrations track schema evolution and support controlled rollback history.",
+              "isCorrect": true
+            },
+            {
+              "text": "A runtime query optimizer that rewrites SQL during every request.",
+              "feedback": "Query optimization is database engine behavior, not migration tooling purpose.",
+              "isCorrect": false
+            },
+            {
+              "text": "A backup snapshot used only when production crashes irrecoverably.",
+              "feedback": "Backups store data states; migrations define schema transition steps.",
+              "isCorrect": false
+            },
+            {
+              "text": "A script that resets all tables before each deployment automatically.",
+              "feedback": "Migrations evolve schema safely, not destructive reset-by-default deployment behavior.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is a database migration in backend development practice?",
+          "whyOptions": [
+            {
+              "text": "Because they provide reproducible, auditable, and reversible schema evolution.",
+              "feedback": "Exactly: teams can synchronize environments and undo problematic changes safely.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because manual edits cannot create foreign keys in SQL databases.",
+              "feedback": "Manual SQL can create constraints; migrations improve process reliability.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because migrations eliminate the need for transactions in all data operations.",
+              "feedback": "Transactions remain essential for atomic data changes regardless of migrations.",
+              "isCorrect": false
+            },
+            {
+              "text": "Because migrations automatically optimize every query execution plan permanently.",
+              "feedback": "Execution plans are runtime concerns and not guaranteed by migrations.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why are migrations preferred over manual schema edits?"
+        }
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "savedAt": "2026-03-03T03:02:56.370Z",
+      "subject": "JSON Quiz",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "FROM → JOIN → WHERE → GROUP BY → Aggregates → HAVING → SELECT → ORDER BY",
+              "feedback": "Correct. The engine builds the dataset (FROM/JOIN), filters rows (WHERE), groups, computes aggregates, filters groups (HAVING), then projects (SELECT) and sorts.",
+              "isCorrect": true
+            },
+            {
+              "text": "SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY",
+              "feedback": "This is the written order, not execution. SELECT runs after grouping and filtering logic is resolved.",
+              "isCorrect": false
+            },
+            {
+              "text": "FROM → WHERE → SELECT → GROUP BY → ORDER BY",
+              "feedback": "Incorrect. Aggregation and HAVING are missing, and SELECT does not run before GROUP BY.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the correct logical execution order of a SQL query?",
+          "whyOptions": [
+            {
+              "text": "Because SELECT projects the final shaped result after grouping and filtering are complete.",
+              "feedback": "Exactly. Projection must wait until rows are grouped and filtered so aggregates and aliases are resolved.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because SELECT is syntactically written first.",
+              "feedback": "Syntax order does not define execution order.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why does SELECT execute after GROUP BY and HAVING?"
+        },
+        {
+          "id": "q2",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "When handling very large multi-table datasets or dependent complex queries.",
+              "feedback": "Correct. Processing near the data reduces transfer cost and avoids server-side latency for heavy joins.",
+              "isCorrect": true
+            },
+            {
+              "text": "When you want all logic centralized in application code.",
+              "feedback": "Centralization alone is not a performance reason.",
+              "isCorrect": false
+            },
+            {
+              "text": "Only for simple single-table queries.",
+              "feedback": "Procedural SQL shines in complex, not trivial, scenarios.",
+              "isCorrect": false
+            }
+          ],
+          "question": "When is procedural SQL preferable over server-side logic?",
+          "whyOptions": [
+            {
+              "text": "Because large intermediate datasets must travel over the network and be processed outside the database engine.",
+              "feedback": "Right. Data transfer and external computation add overhead compared to in-engine execution.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because SQL engines cannot optimize joins.",
+              "feedback": "Modern engines are highly optimized for joins.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why can moving large multi-table processing to the server increase latency?"
+        },
+        {
+          "id": "q3",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "It provides conditional control flow similar to a switch statement.",
+              "feedback": "Correct. CASE enables branching logic inside procedures and expressions.",
+              "isCorrect": true
+            },
+            {
+              "text": "It automatically creates indexes.",
+              "feedback": "CASE does not modify schema structures.",
+              "isCorrect": false
+            },
+            {
+              "text": "It starts or commits transactions.",
+              "feedback": "Transaction control is separate from conditional logic.",
+              "isCorrect": false
+            }
+          ],
+          "question": "In procedural SQL, what is the role of CASE?",
+          "whyOptions": [
+            {
+              "text": "Because it directs execution paths based on evaluated conditions.",
+              "feedback": "Exactly. It changes behavior depending on logical outcomes.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because it enforces data consistency.",
+              "feedback": "Consistency is enforced by constraints and transactions, not CASE.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is CASE considered a control flow construct?"
+        },
+        {
+          "id": "q4",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "Procedures can execute queries and transactions, while functions are limited and usable inside queries.",
+              "feedback": "Correct. Procedures handle broader operations; functions focus on expression-level computation.",
+              "isCorrect": true
+            },
+            {
+              "text": "Functions can perform transactions but procedures cannot.",
+              "feedback": "Reversed. Transaction control belongs to procedures.",
+              "isCorrect": false
+            },
+            {
+              "text": "Procedures cannot return values.",
+              "feedback": "Procedures can return values via parameters or result sets.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What distinguishes stored procedures from user-defined functions (UDFs) in MySQL?",
+          "whyOptions": [
+            {
+              "text": "Because they are designed for value manipulation and behave like expressions or aggregates.",
+              "feedback": "Right. They integrate into SELECT clauses as computed values.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because they manage transaction boundaries.",
+              "feedback": "Functions are generally restricted from transaction control.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why are functions commonly embedded inside queries?"
+        },
+        {
+          "id": "q5",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "A table can have multiple unique keys but only one primary key.",
+              "feedback": "Correct. Primary key uniquely identifies rows; unique keys enforce additional uniqueness rules.",
+              "isCorrect": true
+            },
+            {
+              "text": "A table can have multiple primary keys.",
+              "feedback": "A table is limited to one primary key constraint.",
+              "isCorrect": false
+            },
+            {
+              "text": "Unique keys allow duplicates but primary keys do not.",
+              "feedback": "Both prevent duplicates; the difference is cardinality and role.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the difference between a primary key and a unique key?",
+          "whyOptions": [
+            {
+              "text": "Because it serves as the single main identifier for each row.",
+              "feedback": "Exactly. A row must have one principal identity.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because unique keys are stronger constraints.",
+              "feedback": "Primary keys are not weaker; they define identity.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is only one primary key allowed per table?"
+        },
+        {
+          "id": "q6",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "To filter grouped results after aggregation.",
+              "feedback": "Correct. HAVING operates on grouped data and aggregate results.",
+              "isCorrect": true
+            },
+            {
+              "text": "To filter rows before grouping.",
+              "feedback": "That is handled by WHERE.",
+              "isCorrect": false
+            },
+            {
+              "text": "To sort the final dataset.",
+              "feedback": "Sorting is performed by ORDER BY.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the purpose of the HAVING clause?",
+          "whyOptions": [
+            {
+              "text": "Because WHERE executes before GROUP BY and cannot access aggregate results.",
+              "feedback": "Correct. Aggregates do not exist at the WHERE stage.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because HAVING is faster than WHERE.",
+              "feedback": "Execution timing, not speed, defines the difference.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why can't WHERE filter aggregated values?"
+        },
+        {
+          "id": "q7",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "Two concurrent transactions wait on each other's resources and cannot proceed.",
+              "feedback": "Correct. Mutual resource waiting creates a circular dependency.",
+              "isCorrect": true
+            },
+            {
+              "text": "A long-running transaction.",
+              "feedback": "Slow execution alone is not a deadlock.",
+              "isCorrect": false
+            },
+            {
+              "text": "A failed commit after power loss.",
+              "feedback": "That relates to durability, not deadlock.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is a deadlock in database systems?",
+          "whyOptions": [
+            {
+              "text": "Because transactions may lock resources in different sequences, forming circular waits.",
+              "feedback": "Exactly. Consistent ordering prevents cyclic dependencies.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because SELECT statements lock all tables permanently.",
+              "feedback": "SELECT does not inherently cause permanent locks.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why does inconsistent resource access order increase deadlock risk?"
+        },
+        {
+          "id": "q8",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "To reduce redundancy and prevent anomalies by structuring related tables.",
+              "feedback": "Correct. Normalization simplifies structure and avoids inconsistent duplicate data.",
+              "isCorrect": true
+            },
+            {
+              "text": "To duplicate data for faster reads.",
+              "feedback": "Duplication increases redundancy and anomaly risk.",
+              "isCorrect": false
+            },
+            {
+              "text": "To remove relationships between entities.",
+              "feedback": "Normalization defines clearer relationships.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the main objective of normalization in schema design?",
+          "whyOptions": [
+            {
+              "text": "Because duplicated data must be updated in multiple places, risking inconsistency.",
+              "feedback": "Right. Missed updates create conflicting states.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because primary keys stop working.",
+              "feedback": "Primary keys still function; redundancy affects consistency.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why does redundancy cause update anomalies?"
+        },
+        {
+          "id": "q9",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "A transaction is all-or-nothing.",
+              "feedback": "Correct. Partial completion is not allowed.",
+              "isCorrect": true
+            },
+            {
+              "text": "Transactions always succeed.",
+              "feedback": "Failure is possible; atomicity controls rollback.",
+              "isCorrect": false
+            },
+            {
+              "text": "Transactions run in isolation.",
+              "feedback": "Isolation is a separate ACID property.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What does Atomicity ensure in the ACID model?",
+          "whyOptions": [
+            {
+              "text": "Because it prevents incomplete writes that would leave the database inconsistent.",
+              "feedback": "Exactly. Either all changes persist or none do.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because it speeds up transactions.",
+              "feedback": "Integrity, not performance, is the goal.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is atomicity critical for data integrity?"
+        },
+        {
+          "id": "q10",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "Concurrent transactions behave as if executed sequentially.",
+              "feedback": "Correct. Intermediate states remain invisible to others.",
+              "isCorrect": true
+            },
+            {
+              "text": "Committed data survives crashes.",
+              "feedback": "That describes durability.",
+              "isCorrect": false
+            },
+            {
+              "text": "Every transaction maintains valid constraints.",
+              "feedback": "That refers to consistency.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What does Isolation guarantee in ACID?",
+          "whyOptions": [
+            {
+              "text": "Because it prevents transactions from interfering with each other's intermediate states.",
+              "feedback": "Right. It avoids dirty reads and unpredictable outcomes.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because it guarantees maximum performance.",
+              "feedback": "Higher isolation can reduce performance; correctness is the aim.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is isolation essential in concurrent environments?"
+        }
+      ]
+    }
+  ]
+}
