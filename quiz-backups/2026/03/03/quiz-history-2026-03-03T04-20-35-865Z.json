@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-03-03T04:20:35.865Z",
+  "rowCount": 1,
+  "history": [
+    {
+      "date": "2026-03-03",
+      "savedAt": "2026-03-03T03:02:56.370Z",
+      "subject": "JSON Quiz",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "FROM → JOIN → WHERE → GROUP BY → Aggregates → HAVING → SELECT → ORDER BY",
+              "feedback": "Correct. The engine builds the dataset (FROM/JOIN), filters rows (WHERE), groups, computes aggregates, filters groups (HAVING), then projects (SELECT) and sorts.",
+              "isCorrect": true
+            },
+            {
+              "text": "SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY",
+              "feedback": "This is the written order, not execution. SELECT runs after grouping and filtering logic is resolved.",
+              "isCorrect": false
+            },
+            {
+              "text": "FROM → WHERE → SELECT → GROUP BY → ORDER BY",
+              "feedback": "Incorrect. Aggregation and HAVING are missing, and SELECT does not run before GROUP BY.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the correct logical execution order of a SQL query?",
+          "whyOptions": [
+            {
+              "text": "Because SELECT projects the final shaped result after grouping and filtering are complete.",
+              "feedback": "Exactly. Projection must wait until rows are grouped and filtered so aggregates and aliases are resolved.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because SELECT is syntactically written first.",
+              "feedback": "Syntax order does not define execution order.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why does SELECT execute after GROUP BY and HAVING?"
+        },
+        {
+          "id": "q2",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "When handling very large multi-table datasets or dependent complex queries.",
+              "feedback": "Correct. Processing near the data reduces transfer cost and avoids server-side latency for heavy joins.",
+              "isCorrect": true
+            },
+            {
+              "text": "When you want all logic centralized in application code.",
+              "feedback": "Centralization alone is not a performance reason.",
+              "isCorrect": false
+            },
+            {
+              "text": "Only for simple single-table queries.",
+              "feedback": "Procedural SQL shines in complex, not trivial, scenarios.",
+              "isCorrect": false
+            }
+          ],
+          "question": "When is procedural SQL preferable over server-side logic?",
+          "whyOptions": [
+            {
+              "text": "Because large intermediate datasets must travel over the network and be processed outside the database engine.",
+              "feedback": "Right. Data transfer and external computation add overhead compared to in-engine execution.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because SQL engines cannot optimize joins.",
+              "feedback": "Modern engines are highly optimized for joins.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why can moving large multi-table processing to the server increase latency?"
+        },
+        {
+          "id": "q3",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "It provides conditional control flow similar to a switch statement.",
+              "feedback": "Correct. CASE enables branching logic inside procedures and expressions.",
+              "isCorrect": true
+            },
+            {
+              "text": "It automatically creates indexes.",
+              "feedback": "CASE does not modify schema structures.",
+              "isCorrect": false
+            },
+            {
+              "text": "It starts or commits transactions.",
+              "feedback": "Transaction control is separate from conditional logic.",
+              "isCorrect": false
+            }
+          ],
+          "question": "In procedural SQL, what is the role of CASE?",
+          "whyOptions": [
+            {
+              "text": "Because it directs execution paths based on evaluated conditions.",
+              "feedback": "Exactly. It changes behavior depending on logical outcomes.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because it enforces data consistency.",
+              "feedback": "Consistency is enforced by constraints and transactions, not CASE.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is CASE considered a control flow construct?"
+        },
+        {
+          "id": "q4",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "Procedures can execute queries and transactions, while functions are limited and usable inside queries.",
+              "feedback": "Correct. Procedures handle broader operations; functions focus on expression-level computation.",
+              "isCorrect": true
+            },
+            {
+              "text": "Functions can perform transactions but procedures cannot.",
+              "feedback": "Reversed. Transaction control belongs to procedures.",
+              "isCorrect": false
+            },
+            {
+              "text": "Procedures cannot return values.",
+              "feedback": "Procedures can return values via parameters or result sets.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What distinguishes stored procedures from user-defined functions (UDFs) in MySQL?",
+          "whyOptions": [
+            {
+              "text": "Because they are designed for value manipulation and behave like expressions or aggregates.",
+              "feedback": "Right. They integrate into SELECT clauses as computed values.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because they manage transaction boundaries.",
+              "feedback": "Functions are generally restricted from transaction control.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why are functions commonly embedded inside queries?"
+        },
+        {
+          "id": "q5",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "A table can have multiple unique keys but only one primary key.",
+              "feedback": "Correct. Primary key uniquely identifies rows; unique keys enforce additional uniqueness rules.",
+              "isCorrect": true
+            },
+            {
+              "text": "A table can have multiple primary keys.",
+              "feedback": "A table is limited to one primary key constraint.",
+              "isCorrect": false
+            },
+            {
+              "text": "Unique keys allow duplicates but primary keys do not.",
+              "feedback": "Both prevent duplicates; the difference is cardinality and role.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the difference between a primary key and a unique key?",
+          "whyOptions": [
+            {
+              "text": "Because it serves as the single main identifier for each row.",
+              "feedback": "Exactly. A row must have one principal identity.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because unique keys are stronger constraints.",
+              "feedback": "Primary keys are not weaker; they define identity.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is only one primary key allowed per table?"
+        },
+        {
+          "id": "q6",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "To filter grouped results after aggregation.",
+              "feedback": "Correct. HAVING operates on grouped data and aggregate results.",
+              "isCorrect": true
+            },
+            {
+              "text": "To filter rows before grouping.",
+              "feedback": "That is handled by WHERE.",
+              "isCorrect": false
+            },
+            {
+              "text": "To sort the final dataset.",
+              "feedback": "Sorting is performed by ORDER BY.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the purpose of the HAVING clause?",
+          "whyOptions": [
+            {
+              "text": "Because WHERE executes before GROUP BY and cannot access aggregate results.",
+              "feedback": "Correct. Aggregates do not exist at the WHERE stage.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because HAVING is faster than WHERE.",
+              "feedback": "Execution timing, not speed, defines the difference.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why can't WHERE filter aggregated values?"
+        },
+        {
+          "id": "q7",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "Two concurrent transactions wait on each other's resources and cannot proceed.",
+              "feedback": "Correct. Mutual resource waiting creates a circular dependency.",
+              "isCorrect": true
+            },
+            {
+              "text": "A long-running transaction.",
+              "feedback": "Slow execution alone is not a deadlock.",
+              "isCorrect": false
+            },
+            {
+              "text": "A failed commit after power loss.",
+              "feedback": "That relates to durability, not deadlock.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is a deadlock in database systems?",
+          "whyOptions": [
+            {
+              "text": "Because transactions may lock resources in different sequences, forming circular waits.",
+              "feedback": "Exactly. Consistent ordering prevents cyclic dependencies.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because SELECT statements lock all tables permanently.",
+              "feedback": "SELECT does not inherently cause permanent locks.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why does inconsistent resource access order increase deadlock risk?"
+        },
+        {
+          "id": "q8",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "To reduce redundancy and prevent anomalies by structuring related tables.",
+              "feedback": "Correct. Normalization simplifies structure and avoids inconsistent duplicate data.",
+              "isCorrect": true
+            },
+            {
+              "text": "To duplicate data for faster reads.",
+              "feedback": "Duplication increases redundancy and anomaly risk.",
+              "isCorrect": false
+            },
+            {
+              "text": "To remove relationships between entities.",
+              "feedback": "Normalization defines clearer relationships.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What is the main objective of normalization in schema design?",
+          "whyOptions": [
+            {
+              "text": "Because duplicated data must be updated in multiple places, risking inconsistency.",
+              "feedback": "Right. Missed updates create conflicting states.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because primary keys stop working.",
+              "feedback": "Primary keys still function; redundancy affects consistency.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why does redundancy cause update anomalies?"
+        },
+        {
+          "id": "q9",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "A transaction is all-or-nothing.",
+              "feedback": "Correct. Partial completion is not allowed.",
+              "isCorrect": true
+            },
+            {
+              "text": "Transactions always succeed.",
+              "feedback": "Failure is possible; atomicity controls rollback.",
+              "isCorrect": false
+            },
+            {
+              "text": "Transactions run in isolation.",
+              "feedback": "Isolation is a separate ACID property.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What does Atomicity ensure in the ACID model?",
+          "whyOptions": [
+            {
+              "text": "Because it prevents incomplete writes that would leave the database inconsistent.",
+              "feedback": "Exactly. Either all changes persist or none do.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because it speeds up transactions.",
+              "feedback": "Integrity, not performance, is the goal.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is atomicity critical for data integrity?"
+        },
+        {
+          "id": "q10",
+          "type": "mcq",
+          "options": [
+            {
+              "text": "Concurrent transactions behave as if executed sequentially.",
+              "feedback": "Correct. Intermediate states remain invisible to others.",
+              "isCorrect": true
+            },
+            {
+              "text": "Committed data survives crashes.",
+              "feedback": "That describes durability.",
+              "isCorrect": false
+            },
+            {
+              "text": "Every transaction maintains valid constraints.",
+              "feedback": "That refers to consistency.",
+              "isCorrect": false
+            }
+          ],
+          "question": "What does Isolation guarantee in ACID?",
+          "whyOptions": [
+            {
+              "text": "Because it prevents transactions from interfering with each other's intermediate states.",
+              "feedback": "Right. It avoids dirty reads and unpredictable outcomes.",
+              "isCorrect": true
+            },
+            {
+              "text": "Because it guarantees maximum performance.",
+              "feedback": "Higher isolation can reduce performance; correctness is the aim.",
+              "isCorrect": false
+            }
+          ],
+          "requiresWhy": true,
+          "whyQuestion": "Why is isolation essential in concurrent environments?"
+        }
+      ]
+    }
+  ]
+}
